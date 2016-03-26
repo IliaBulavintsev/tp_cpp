@@ -1,0 +1,9 @@
+*.txt
+*.out
+Makefile
+.idea
+Makefile~
+*txt~
+main
+tests
+
