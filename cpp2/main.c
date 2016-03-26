@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <assert.h>
 
 #define MAX_STR 1024
 
@@ -48,18 +49,22 @@ void D_Stack_Free(D_Stack *stack){
     free(stack);
 }
 void Stack_Push(Stack *stack,char op){
+    assert(stack->real_size <= stack->size && stack->real_size >= 0);
     stack->symbol[stack->real_size] = op;
     stack->real_size++;
 };
 void D_Stack_Push(D_Stack *stack,double op){
+    assert(stack->real_size <= stack->size && stack->real_size >= 0);
     stack->symbol[stack->real_size] = op;
     stack->real_size++;
 };
 char Stack_Pop(Stack *stack){
+    assert(stack->real_size > 0);
     stack->real_size--;
     return stack->symbol[stack->real_size];
 }
 double D_Stack_Pop(D_Stack *stack){
+    assert(stack->real_size > 0);
     stack->real_size--;
     return stack->symbol[stack->real_size];
 }
@@ -281,8 +286,12 @@ int main() {
     D_Stack *Q = NULL;
     Stack *W = NULL;
     Q = D_Stack_Init(Q, strlen(str));
+    if (Q == NULL){
+        printf("%s", "[error]");
+        return 0;
+    }
     W = Stack_Init(W, strlen(str));
-    if (Q == NULL || W == NULL){
+    if (W == NULL){
         printf("%s", "[error]");
         return 0;
     }

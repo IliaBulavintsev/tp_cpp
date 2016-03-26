@@ -44,24 +44,24 @@ int main() {
         printf("%s","[error]");
         return 0;
     }
-    int count=1;
-    //int count=0;
+//    int count=1;
+    int count=0;
     char *str1 = NULL;
     char **buffer = NULL;
     while (fgets(str, MAX_STR, stdin) != NULL){
         str1 = (char*)calloc((strlen(str) + 1) , sizeof(char));
         if(str1 == NULL) {
             printf("%s","[error]");
-            for (int i = 0; i < count - 1; ++i)
+            for (int i = 0; i < count; ++i)
                 free(array);
             return 0;
         }
         strcpy(str1, str);
         str1[strlen(str)]='\0';
-        array[count-1] = str1;
-        if( (buffer = (char**)realloc(array, sizeof(char*) * (++count))) == NULL){
+        array[count] = str1;
+        if( (buffer = (char**)realloc(array, sizeof(char*) * (++count+1))) == NULL){
             printf("%s","[error]");
-            for (int i = 0; i < count - 1; ++i) {
+            for (int i = 0; i < count; ++i) {
                 free(array[i]);
             }
             free(str1);
@@ -71,13 +71,13 @@ int main() {
         }
     }
     int res_of_detect=0;
-    for (int i = 0; i <count - 1; ++i) {
+    for (int i = 0; i < count; ++i) {
         if(!detect(array[i])){
             res_of_detect++;
             printf("%s",array[i]);
         }
     }
-    for (int i = 0; i <count - 1; ++i) {
+    for (int i = 0; i < count; ++i) {
         free(array[i]);
     }
     free(array);
